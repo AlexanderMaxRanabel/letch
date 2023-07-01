@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read};
+use std::env;
 
 fn distro_name_get() -> String {
     //most of the code comes from my other project
@@ -30,9 +31,20 @@ fn hostname_get() -> String {
     return hostname;
 }
 
+fn username() -> String {
+    match env::var("USER") {
+        Ok(username) => return username,
+        Err(_) => return "Unknown".to_string(),
+    }
+}
 fn main() {
     let distro_name = distro_name_get();
     let hostname = hostname_get();
+    let username = username();
+    let full = username.clone() + "@" + &hostname;
+    println!("{}", full);
+    println!(" ");
+    println!("User: {} ", username);
     println!("Distro: {}", distro_name);
     println!("Hostname: {}", hostname);
 }
