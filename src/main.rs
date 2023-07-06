@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read};
 use std::env;
+use colored::*;
 
 fn distro_name_get() -> String {
     //most of the code comes from my other project
@@ -24,7 +25,7 @@ fn distro_name_get() -> String {
 }
 
 fn hostname_get() -> String {
-    let mut file = File::open("/etc/hostname").expect("Failed to open file");
+    let mut file = File::open("/etc/hostname").expect("Failed to open the file");
     let mut hostname = String::new();
     file.read_to_string(&mut hostname).expect("Failed to read the file");
 
@@ -37,14 +38,24 @@ fn username() -> String {
         Err(_) => return "Unknown".to_string(),
     }
 }
+
+fn kernel_v() -> String {
+    let mut kernel_file = File::open("/proc/version").expect("Failed to open the file");
+    let mut kernel_version = String::new();
+    kernel_file.read_to_string(&mut kernel_version).expect("Failed to read the file");
+    return kernel_version;
+}
+
 fn main() {
     let distro_name = distro_name_get();
     let hostname = hostname_get();
     let username = username();
+    let kernel = kernel_v();
     let full = username.clone() + "@" + &hostname;
     println!("{}", full);
     println!(" ");
-    println!("User: {} ", username);
-    println!("Distro: {}", distro_name);
-    println!("Hostname: {}", hostname);
+    println!("| User: {} ", username.red());
+    println!("| Distro: {}", distro_name.blue());
+    println!("| Hostname: {}", hostname.red());
+    println!("| Kernel: {}", kernel.green());
 }
