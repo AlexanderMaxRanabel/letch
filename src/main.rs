@@ -41,8 +41,14 @@ fn username() -> String {
 
 fn kernel_v() -> String {
     let mut kernel_file = File::open("/proc/version").expect("Failed to open the file");
-    let mut kernel_version = String::new();
-    kernel_file.read_to_string(&mut kernel_version).expect("Failed to read the file");
+    let mut kernel_name = String::new();
+    kernel_file.read_to_string(&mut kernel_name).expect("Failed to read the file");
+
+    let mut kernel_version: String = (kernel_name[14..kernel_name.len()]).to_string();
+    kernel_version = kernel_version.split_whitespace()
+        .next()
+        .unwrap()
+        .to_string();
     return kernel_version;
 }
 
@@ -56,6 +62,6 @@ fn main() {
     println!(" ");
     println!("| User: {} ", username.red());
     println!("| Distro: {}", distro_name.blue());
-    println!("| Hostname: {}", hostname.red());
+    println!("| Hostname: {}", hostname.trim().red());
     println!("| Kernel: {}", kernel.green());
 }
