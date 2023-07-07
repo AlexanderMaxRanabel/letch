@@ -52,11 +52,28 @@ fn kernel_v() -> String {
     return kernel_version;
 }
 
+fn uptime() -> String {
+    let mut uptime = String::new();
+    let uptime_file = File::open("/proc/uptime").expect("Failed to open file");
+    let mut uptime_reader = BufReader::new(uptime_file);
+    uptime_reader.read_line(&mut uptime).expect("failed to read file");
+    let mut iterator = uptime.split_whitespace();
+    uptime = iterator.next().expect("Iterator error").to_string();
+
+    // was never expecting rounding to be this difficult
+    let uptimeint = uptime.parse::<f32>();
+    let roundeduptimeint: u32 = uptimeint.expect("rounding error").round() as u32;
+    let uptimemins: u32 = roundeduptimeint / 60;
+
+    return uptimemins.to_string();
+}
+
 fn main() {
     let distro_name = distro_name_get();
     let hostname = hostname_get();
     let username = username();
     let kernel = kernel_v();
+    let uptime = uptime();
     let full = username.clone() + "@" + &hostname;
 
     match distro_name.as_str() {
@@ -87,6 +104,20 @@ fn main() {
 
             println!("{}", logo.blue());
         },
+
+        "Debian" => {
+            let logo = r#"
+   _____
+ /  __ \\
+|  /    |
+|  \\___-
+ -_
+   --_
+                "#;
+
+            println!("{}", logo.red());
+        },
+
         _=> {
            println!("LOGO not avaible"); 
         }
@@ -97,4 +128,5 @@ fn main() {
     println!("| Distro: {}", distro_name.blue());
     println!("| Hostname: {}", hostname.trim().red());
     println!("| Kernel: {}", kernel.green());
+    println!("| Uptime: {} Minutes", uptime.cyan());
 }
