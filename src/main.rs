@@ -58,6 +58,39 @@ fn main() {
     let username = username();
     let kernel = kernel_v();
     let full = username.clone() + "@" + &hostname;
+
+    match distro_name.as_str() {
+        "Arch Linux" => {
+            let logo = r#"
+                       /\\
+				      /  \\
+				     /\\   \\
+				    /      \\
+				   /   ,,   \\
+				  /   |  |  -\\
+				 /_-''    ''-_\\
+            "#;
+
+            println!("{}", logo.blue());
+        },
+
+        "NixOS" => {
+            let logo = r#"
+                 \\  \\ //      
+                ==\\__\\/ //    
+                  //   \\//     
+               ==//     //==    
+                //\\___//       
+               // /\\  \\==     
+                 // \\  \\  
+            "#;
+
+            println!("{}", logo.blue());
+        },
+        _=> {
+           println!("LOGO not avaible"); 
+        }
+    }
     println!("{}", full);
     println!(" ");
     println!("| User: {} ", username.red());
