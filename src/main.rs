@@ -118,6 +118,22 @@ fn main() {
             println!("{}", logo.red());
         },
 
+        "Fedora" => {
+            let logo = r#"
+         ,'''''.
+		|   ,.  |
+		|  |  '_'
+   ,....|  |..
+ .'  ,_;|   ..'
+|  |   |  |
+|  ',_,'  |
+'.     ,'
+  '''''
+                "#;
+
+            println!("{}", logo.blue());
+        },
+
         _=> {
            println!("LOGO not avaible"); 
         }
