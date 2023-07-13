@@ -79,13 +79,13 @@ fn main() {
     match distro_name.as_str() {
         "Arch Linux" => {
             let logo = r#"
-                       /\\
-				      /  \\
-				     /\\   \\
-				    /      \\
-				   /   ,,   \\
-				  /   |  |  -\\
-				 /_-''    ''-_\\
+      /\\
+	 /  \\
+	/\\   \\
+   /      \\
+  /   ,,   \\
+ /   |  |  -\\
+/_-''    ''-_\\
             "#;
 
             println!("{}", logo.blue());
@@ -122,11 +122,19 @@ fn main() {
            println!("LOGO not avaible"); 
         }
     }
+
+    let uptime_numeral: i32 = uptime.parse().expect("Failed to convert");
+
     println!("{}", full);
     println!(" ");
     println!("| User: {} ", username.red());
     println!("| Distro: {}", distro_name.blue());
     println!("| Hostname: {}", hostname.trim().red());
     println!("| Kernel: {}", kernel.green());
-    println!("| Uptime: {} Minutes", uptime.cyan());
+    if uptime_numeral > 60 {
+        let uptime_hours = uptime_numeral / 60;
+        println!("| Uptime: {} {}", uptime_hours.to_string().cyan(), "Hours".cyan());
+    } else {
+        println!("| Uptime: {} {}", uptime.cyan(), "Minutes".cyan());
+    }
 }
