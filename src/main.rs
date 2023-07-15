@@ -147,7 +147,7 @@ fn main() {
         }
     }
 
-    let uptime_numeral: i32 = uptime.parse().expect("Failed to convert");
+    let uptime_numeral: f64 = uptime.parse().expect("Failed to convert");
 
     println!("{}", full);
     println!("│ User: {} ", username.red());
@@ -155,9 +155,10 @@ fn main() {
     println!("│ Hostname: {}", hostname.trim().red());
     println!("│ Kernel: {}", kernel.green());
     println!("│ Shell: {}", shell.green());
-    if uptime_numeral > 60 {
-        let uptime_hours = uptime_numeral / 60;
-        println!("| Uptime: {} {}", uptime_hours.to_string().cyan(), "Hours".cyan());
+    if uptime_numeral > 60.0 {
+        let uptime_hours = uptime_numeral / 60.0;
+        let formatted = format!("{:.2}", uptime_hours);
+        println!("| Uptime: {} {}", formatted.cyan(), "Hours".cyan());
     } else {
         println!("| Uptime: {} {}", uptime.cyan(), "Minutes".cyan());
     }
