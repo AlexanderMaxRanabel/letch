@@ -68,20 +68,28 @@ fn uptime() -> String {
     return uptimemins.to_string();
 }
 
+fn shell() -> String {
+    let shell = env::var("SHELL").unwrap();
+    let parts: Vec<&str> = shell.rsplitn(2, '/').collect();    
+    let shell = parts[0];
+    return shell.to_string(); 
+}
+
 fn main() {
     let distro_name = distro_name_get();
     let hostname = hostname_get();
     let username = username();
     let kernel = kernel_v();
     let uptime = uptime();
+    let shell = shell();
     let full = username.clone() + "@" + &hostname;
 
     match distro_name.as_str() {
         "Arch Linux" => {
             let logo = r#"
       /\\
-	 /  \\
-	/\\   \\
+     /  \\
+    /\\   \\
    /      \\
   /   ,,   \\
  /   |  |  -\\
@@ -142,11 +150,11 @@ fn main() {
     let uptime_numeral: i32 = uptime.parse().expect("Failed to convert");
 
     println!("{}", full);
-    println!(" ");
-    println!("| User: {} ", username.red());
-    println!("| Distro: {}", distro_name.blue());
-    println!("| Hostname: {}", hostname.trim().red());
-    println!("| Kernel: {}", kernel.green());
+    println!("│ User: {} ", username.red());
+    println!("│ Distro: {}", distro_name.blue());
+    println!("│ Hostname: {}", hostname.trim().red());
+    println!("│ Kernel: {}", kernel.green());
+    println!("│ Shell: {}", shell.green());
     if uptime_numeral > 60 {
         let uptime_hours = uptime_numeral / 60;
         println!("| Uptime: {} {}", uptime_hours.to_string().cyan(), "Hours".cyan());
