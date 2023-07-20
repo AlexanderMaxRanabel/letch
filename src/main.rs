@@ -153,8 +153,9 @@ fn main() {
     println!("│ User: {} ", username.red());
     println!("│ Distro: {}", distro_name.blue());
     println!("│ Hostname: {}", hostname.trim().red());
-    println!("│ Kernel: {}", kernel.green());
     println!("│ Shell: {}", shell.green());
+    println!("│ Kernel: {}", kernel.green());
+    
     if uptime_numeral > 60.0 {
         let uptime_hours = uptime_numeral / 60.0;
         let formatted = format!("{:.2}", uptime_hours);
