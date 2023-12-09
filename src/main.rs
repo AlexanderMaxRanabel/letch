@@ -159,8 +159,8 @@ fn main() {
     if uptime_numeral > 60.0 {
         let uptime_hours = uptime_numeral / 60.0;
         let formatted = format!("{:.2}", uptime_hours);
-        println!("| Uptime: {} {}", formatted.cyan(), "Hours".cyan());
+        println!("│ Uptime: {} {}", formatted.cyan(), "Hours".cyan());
     } else {
-        println!("| Uptime: {} {}", uptime.cyan(), "Minutes".cyan());
+        println!("│ Uptime: {} {}", uptime.cyan(), "Minutes".cyan());
     }
 }
